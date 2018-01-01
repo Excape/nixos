@@ -1,7 +1,6 @@
-
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
+# and in the NixOS manual (accessible by running â€˜nixos-helpâ€™).
 
 { config, pkgs, ... }:
 
@@ -11,17 +10,12 @@
       ./hardware-configuration.nix
     ];
 
-  # Use the GRUB 2 boot loader.
-  boot.loader.grub.enable = true;
-  boot.loader.grub.version = 2;
-  # boot.loader.grub.efiSupport = true;
-  # boot.loader.grub.efiInstallAsRemovable = true;
-  # boot.loader.efi.efiSysMountPoint = "/boot/efi";
-  # Define on which hard drive you want to install Grub.
-  boot.loader.grub.device = "/dev/sda"; # or "nodev" for efi only
+  # Use the systemd-boot EFI boot loader.
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
 
-  # networking.hostName = "nixos"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supp$
+  networking.hostName = "trusty-servant"; # Define your hostname.
+  networking.networkmanager.enable = true;
 
   # Select internationalisation properties.
   i18n = {
@@ -33,23 +27,70 @@
   # Set your time zone.
   time.timeZone = "Europe/Zurich";
 
+  nixpkgs.config.allowUnfree = true;
+
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
-    wget vim git
+    # basic
+    wget
+    vim
+    git
+    python3
+    firefox
+    networkmanagerapplet
+    gnupg
+    borgbackup
+    cifs-utils
+    libgnome_keyring
+
+    # yubikey stuff
+    pcsctools
+    yubikey-personalization
+    
+    # appearance
+    compton
+    lxappearance 
+    arc-theme
+    numix-icon-theme
   ];
+
+  fonts = {
+    enableFontDir = true;
+    enableCoreFonts = true;
+    enableGhostscriptFonts = true;
+    fonts = with pkgs; [
+      roboto
+      gentium-book-basic
+      font-awesome-ttf
+      siji
+      powerline-fonts
+    ];
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   programs.bash.enableCompletion = true;
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = { enable = true; enableSSHSupport = true; };
+  programs.gnupg.agent = { enable = true; enableSSHSupport = true; };
+  programs.zsh.enable = true;
 
   # List services that you want to enable:
 
+  # for smartcards (yubikey)
+  services.pcscd.enable = true;
+
+  services.udev.packages = with pkgs; [
+    yubikey-personalization
+  ];
+  
+  # battery management
+  services.tlp.enable = true;
+
+  services.gnome3.gnome-keyring.enable = true;
+
   # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
-  services.openssh.permitRootLogin = "yes";
+  # services.openssh.enable = true;
+
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
@@ -61,21 +102,32 @@
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
-  services.xserver.layout = "de_CH";
+  services.xserver.layout = "ch";
   services.xserver.xkbOptions = "eurosign:e";
+ 
+  hardware.pulseaudio.enable = true;
+
+  virtualisation.docker.enable = true;
 
   # Enable touchpad support.
-  # services.xserver.libinput.enable = true;
+  services.xserver.libinput = {
+    enable = true;
+    naturalScrolling = false;
+  };
 
-  # Enable the Desktop Environment.
+  # Enable the i3 Desktop Environment.
   services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.windowManager.i3.enable = true;
-  services.xserver.windowManager.i3.package = pgks.i3-gaps;
+  services.xserver.windowManager.i3= {
+    enable = true;
+    package = pkgs.i3-gaps;
+  };
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.extraUsers.robin = { 
+  # Define a user account. Don't forget to set a password with â€˜passwdâ€™.
+  users.defaultUserShell = pkgs.zsh;
+  users.extraUsers.robin = {
     isNormalUser = true;
     home = "/home/robin";
+    useDefaultShell = true;
     extraGroups = [ "wheel" "networkmanager" ];
   };
 
