@@ -6,8 +6,8 @@
     ];
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
-  boot.kernelModules = [ "kvm-intel" "acpi-call" ];
-  boot.extraModulePackages = [ ];
+  boot.kernelModules = [ "kvm-intel" "acpi" "thinkpad-acpi" "acpi-call" ];
+  boot.extraModulePackages = [ config.boot.kernelPackages.acpi_call ];
 
   # setup LUKS
   boot.initrd.luks.devices = [

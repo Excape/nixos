@@ -131,6 +131,11 @@
     extraGroups = [ "wheel" "networkmanager" ];
   };
 
+  # allow tlp-stat without password
+  security.sudo.extraConfig = ''
+      robin ALL=(root) NOPASSWD: /run/current-system/sw/bin/tlp-stat
+    '';
+
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database
   # servers. You should change this only after NixOS release notes say you
