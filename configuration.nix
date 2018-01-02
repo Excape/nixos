@@ -123,7 +123,7 @@
  
   # lock on suspend
   services.xserver.displayManager.sessionCommands = ''
-    ${pkgs.xss-lock}/bin/xss-lock -- ${pkgs.i3lock-fancy}/bin/i3lock-fancy
+    ${pkgs.xss-lock}/bin/xss-lock -- ${pkgs.i3lock-fancy}/bin/i3lock-fancy &
   '';
 
   hardware.pulseaudio.enable = true;
