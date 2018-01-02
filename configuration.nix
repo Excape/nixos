@@ -42,7 +42,7 @@
     gnupg
     borgbackup
     cifs-utils
-    libgnome_keyring
+    psmisc # tree, killall, etc
 
     # yubikey stuff
     pcsctools
@@ -53,6 +53,7 @@
     lxappearance 
     arc-theme
     numix-icon-theme
+    notify-osd # notification server
   ];
 
   fonts = {
@@ -88,6 +89,12 @@
 
   services.gnome3.gnome-keyring.enable = true;
 
+  # backlight control
+  programs.light.enable = true;
+
+  # java
+  programs.java.enable = true;
+
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
 
@@ -113,6 +120,7 @@
   services.xserver.libinput = {
     enable = true;
     naturalScrolling = false;
+    accelProfile = "flat"; # disable accel
   };
 
   # Enable the i3 Desktop Environment.
