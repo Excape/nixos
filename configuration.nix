@@ -126,6 +126,12 @@
     ${pkgs.xss-lock}/bin/xss-lock -- ${pkgs.i3lock-fancy}/bin/i3lock-fancy &
   '';
 
+  # redshift
+  services.redshift = {
+    enable = true;
+    provider = "geoclue2";
+  };
+
   hardware.pulseaudio.enable = true;
 
   virtualisation.docker.enable = true;
