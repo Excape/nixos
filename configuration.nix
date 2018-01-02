@@ -123,8 +123,19 @@
     accelProfile = "flat"; # disable accel
   };
 
+  services.xserver.displayManager.lightdm = {
+    enable = true;
+    background = "${pkgs.nixos-artwork.wallpapers.gnome-dark}/share/artwork/gnome/nix-wallpaper-stripes-logo.png";
+    greeters.gtk = {
+      enable = true;
+      iconTheme = { name = "Numix"; package = pkgs.numix-icon-theme; };
+      theme = { name = "Arc-Darker"; package = pkgs.arc-theme; };
+    };
+  };
+
+  services.accounts-daemon.enable = true;
+
   # Enable the i3 Desktop Environment.
-  services.xserver.displayManager.lightdm.enable = true;
   services.xserver.windowManager.i3= {
     enable = true;
     package = pkgs.i3-gaps;
@@ -138,6 +149,8 @@
     useDefaultShell = true;
     extraGroups = [ "wheel" "networkmanager" ];
   };
+
+  fileSystems."/home/robin/Downloads" = { device = "tmpfs"; fsType = "tmpfs"; options = [ "size=25%" ]; };
 
   # allow tlp-stat without password
   security.sudo.extraConfig = ''
