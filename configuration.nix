@@ -119,16 +119,15 @@
   # Enable touchpad support.
   services.xserver.libinput = {
     enable = true;
-    naturalScrolling = false;
+    naturalScrolling = true;
     accelProfile = "flat"; # disable accel
   };
 
   services.xserver.displayManager.lightdm = {
     enable = true;
-    background = "${pkgs.nixos-artwork.wallpapers.gnome-dark}/share/artwork/gnome/nix-wallpaper-stripes-logo.png";
+    background = "${pkgs.nixos-artwork.wallpapers.stripes-logo}/share/artwork/gnome/nix-wallpaper-stripes-logo.png";
     greeters.gtk = {
       enable = true;
-      iconTheme = { name = "Numix"; package = pkgs.numix-icon-theme; };
       theme = { name = "Arc-Darker"; package = pkgs.arc-theme; };
     };
   };
