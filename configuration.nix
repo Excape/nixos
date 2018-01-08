@@ -29,6 +29,33 @@
 
   nixpkgs.config.allowUnfree = true;
 
+  # QT4/5 global theme
+  environment.etc."xdg/Trolltech.conf" = {
+    text = ''
+      [Qt]
+      style=GTK+
+    '';
+    mode = "444";
+  };
+
+  # GTK3 global theme (widget and icon theme)
+  environment.etc."gtk-3.0/settings.ini" = {
+    text = ''
+      [Settings]
+      gtk-theme-name="Arc-Darker"
+      gtk-icon-theme-name="Numix"
+    '';
+    mode = "444";
+  };
+
+  # GTK2 global theme
+  environment.etc."gtk-2.0/gtkrc" = {
+    text = ''
+      gtk-theme-name="Arc-Darker"
+      gtk-icon-theme-name="Numix"
+    '';
+    mode = "444";
+  };
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
@@ -43,6 +70,7 @@
     borgbackup
     cifs-utils
     psmisc # tree, killall, etc
+    nix-zsh-completions
 
     # yubikey stuff
     pcsctools
@@ -66,12 +94,13 @@
       font-awesome-ttf
       siji
       powerline-fonts
+      hack-font
     ];
   };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
-  programs.bash.enableCompletion = true;
+  programs.zsh.enableCompletion = true;
   programs.gnupg.agent = { enable = true; enableSSHSupport = true; };
   programs.zsh.enable = true;
 
