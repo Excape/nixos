@@ -72,13 +72,13 @@
     cifs-utils
     psmisc # tree, killall, etc
     nix-zsh-completions
+    busybox # common tools
 
     # yubikey stuff
     pcsctools
     yubikey-personalization
     
     # appearance
-    compton
     lxappearance 
     arc-theme
     numix-icon-theme
@@ -162,6 +162,9 @@
     provider = "geoclue2";
   };
 
+  # compton for wm rendering
+  services.compton.enable = true;
+
   hardware.pulseaudio.enable = true;
 
   virtualisation.docker.enable = true;
@@ -171,6 +174,7 @@
     enable = true;
     naturalScrolling = true;
     accelProfile = "flat"; # disable accel
+    tapping = false; # disable tap click
   };
 
   services.xserver.displayManager.lightdm = {
