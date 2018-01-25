@@ -123,11 +123,16 @@
 
   services.gnome3.gnome-keyring.enable = true;
 
+  # keybase
+  services.keybase.enable = true;
+  services.kbfs.enable = true;
+
   # backlight control
   programs.light.enable = true;
 
   # java
   programs.java.enable = true;
+
 
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
