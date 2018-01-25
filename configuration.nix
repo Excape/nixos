@@ -45,6 +45,7 @@
       [Settings]
       gtk-theme-name="Arc-Darker"
       gtk-icon-theme-name="Numix"
+      gtk-cursor-theme-name="Paper"
     '';
     mode = "444";
   };
@@ -54,6 +55,7 @@
     text = ''
       gtk-theme-name="Arc-Darker"
       gtk-icon-theme-name="Numix"
+      gtk-cursor-theme-name="Paper"
     '';
     mode = "444";
   };
@@ -82,6 +84,8 @@
     lxappearance 
     arc-theme
     numix-icon-theme
+    paper-icon-theme
+
     notify-osd # notification server
   ];
 
@@ -169,6 +173,8 @@
 
   virtualisation.docker.enable = true;
 
+  virtualisation.virtualbox.host.enable = true;
+
   # Enable touchpad support.
   services.xserver.libinput = {
     enable = true;
@@ -200,7 +206,7 @@
     isNormalUser = true;
     home = "/home/robin";
     useDefaultShell = true;
-    extraGroups = [ "wheel" "networkmanager" ];
+    extraGroups = [ "wheel" "networkmanager" "vboxusers" ];
   };
 
   fileSystems."/home/robin/Downloads" = { device = "tmpfs"; fsType = "tmpfs"; options = [ "size=25%" ]; };
