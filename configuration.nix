@@ -100,6 +100,7 @@
       siji
       powerline-fonts
       hack-font
+      vistafonts
     ];
   };
 
@@ -144,7 +145,16 @@
   # networking.firewall.enable = false;
 
   # Enable CUPS to print documents.
-  # services.printing.enable = true;
+  services.printing = {
+    enable = true;
+    drivers = [ pkgs.epson-escpr ];
+  };
+
+  # enable avahi for wireless printer discovery
+  services.avahi = {
+    enable = true;
+    nssmdns = true;
+  };
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
@@ -174,7 +184,12 @@
   # compton for wm rendering
   services.compton.enable = true;
 
-  hardware.pulseaudio.enable = true;
+  # use pulseaudioFull for bluetooth support
+  hardware.pulseaudio = {
+    enable = true;
+    package = pkgs.pulseaudioFull;
+  };
+  hardware.bluetooth.enable = true;
 
   virtualisation.docker.enable = true;
 
