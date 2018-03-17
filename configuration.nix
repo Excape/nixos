@@ -14,6 +14,9 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.tmpOnTmpfs = true; # mount /tmp on tmpfs
+  boot.plymouth = {
+    enable = true; # boot splash screen
+  };
 
   networking.hostName = "trusty-servant"; # Define your hostname.
   networking.networkmanager.enable = true;
