@@ -164,15 +164,6 @@
   services.xserver.layout = "ch";
   services.xserver.xkbOptions = "eurosign:e";
 
-  # auto locking
-  services.xserver.xautolock = {
-    enable = true;
-    enableNotifier = true;
-    notify = 20;
-    time = 15; # minutes
-    locker = "${pkgs.i3lock-fancy}/bin/i3lock-fancy";
-  };
- 
   # lock on suspend
   services.xserver.displayManager.sessionCommands = ''
     ${pkgs.xss-lock}/bin/xss-lock -- ${pkgs.i3lock-fancy}/bin/i3lock-fancy &
